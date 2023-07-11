@@ -8,17 +8,17 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "sebbu-collections",
-            targets: ["sebbu-collections"]),
+            name: "SebbuCollections",
+            targets: ["SebbuCollections"]),
     ],
     dependencies: [.package(url: "https://github.com/apple/swift-collections.git", from: "1.0.0")],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-        .target(name: "sebbu-collections",
+        .target(name: "SebbuCollections",
                 dependencies: [.product(name: "Collections", package: "swift-collections")]),
         .testTarget(
-            name: "sebbu-collectionsTests",
-            dependencies: ["sebbu-collections"]),
+            name: "SebbuCollectionsTests",
+            dependencies: ["SebbuCollections"]),
     ]
 )

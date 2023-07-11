@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import sebbu_collections
+@testable import SebbuCollections
 
 final class TicketMapsTests: XCTestCase {
     func testBasic() {
