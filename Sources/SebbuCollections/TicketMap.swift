@@ -95,7 +95,7 @@ public struct TicketMap<Element> {
 
 @available(macOS 10.15.0, iOS 13.0.0, *)
 extension TicketMap: Sequence {
-    public struct Iterator<Element>: IteratorProtocol {
+    public struct Iterator: IteratorProtocol {
         var index = 0
         internal let ticketMap: TicketMap<Element>
         
@@ -113,7 +113,7 @@ extension TicketMap: Sequence {
         }
     }
     
-    public func makeIterator() -> Iterator<Element> {
+    public func makeIterator() -> Iterator {
         Iterator(self)
     }
 }
