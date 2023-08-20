@@ -44,13 +44,13 @@ public struct RingBuffer<Element> {
     @inlinable
     public subscript(index: Int) -> Element {
         get {
-            assert(index >= 0)
-            assert(index < count)
+            assert(index >= 0, "Index out of bounds")
+            assert(index < count, "Index out of bounds")
             return buffer[(headIndex + index) % buffer.count]!
         }
         set {
-            assert(index >= 0)
-            assert(index < count)
+            assert(index >= 0, "Index out of bounds")
+            assert(index < count, "Index out of bounds")
             buffer[(headIndex + index) % buffer.count] = newValue
         }
     }
