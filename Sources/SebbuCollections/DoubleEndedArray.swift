@@ -176,7 +176,7 @@ extension DoubleEndedArray: Sequence {
 
         public mutating func next() -> Element? {
             if index < deque.count {
-                defer { index += 1}
+                defer { index += 1 }
                 return deque[index]
             }
             return nil
