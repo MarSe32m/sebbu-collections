@@ -8,7 +8,7 @@
 import XCTest
 @testable import SebbuCollections
 
-final class TicketMapsTests: XCTestCase {
+final class TicketMapTests: XCTestCase {
     func testBasic() {
         var ticketMap = TicketMap<Int>()
         for index in 0..<1000 {
