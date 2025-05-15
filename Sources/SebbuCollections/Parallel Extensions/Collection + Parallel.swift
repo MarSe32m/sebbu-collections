@@ -66,7 +66,7 @@ public extension Collection where Self: Sendable, Element: Sendable, Index: Send
                 let (start, end) = index.wrappingAdd(blockSize, ordering: .relaxed)
                 if start >= totalCount { break }
                 let startIndex = self.index(_startIndex, offsetBy: start)
-                let endIndex = self.index(_endIndex, offsetBy: end, limitedBy: _endIndex) ?? _endIndex
+                let endIndex = self.index(_startIndex, offsetBy: end, limitedBy: _endIndex) ?? _endIndex
                 for value in self[startIndex..<endIndex] {
                     body(value)
                 }
