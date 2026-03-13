@@ -6,16 +6,18 @@
 //
 
 import Dispatch
-import Foundation
 import Synchronization
 
 // Array specialization of sequence parallelMap and parallelForEach
 public extension Array where Element: Sendable {
     @inlinable
-    func parallelMap<T>(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                         blockSize: Int = 1,
-                         _ transform: @Sendable (Element) -> T) -> [T] {
+    func parallelMap<T>(
+        parallelism: Int?,
+        blockSize: Int = 1,
+        _ transform: @Sendable (Element) -> T
+    ) -> [T] {
         if isEmpty { return [] }
+        let parallelism = parallelism ?? 256
         precondition(parallelism >= 1, "Parallelism must be atleast 1")
         precondition(blockSize >= 1, "Block size must be atleast 1")
         if parallelism == 1 { return map(transform) }
@@ -44,10 +46,13 @@ public extension Array where Element: Sendable {
     }
     
     @inlinable
-    func parallelForEach(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                             blockSize: Int = 1,
-                             _ body: @Sendable @escaping (Element) -> Void) {
+    func parallelForEach(
+        parallelism: Int? = nil,
+        blockSize: Int = 1,
+        _ body: @Sendable @escaping (Element) -> Void
+    ) {
         if isEmpty { return }
+        let parallelism = parallelism ?? 256
         precondition(parallelism >= 1, "Parallelism must be atleast 1")
         precondition(blockSize >= 1, "Block size must be atleast 1")
         if parallelism == 1 {

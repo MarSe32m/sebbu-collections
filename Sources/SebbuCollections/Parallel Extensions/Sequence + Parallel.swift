@@ -6,14 +6,16 @@
 //
 
 import Dispatch
-import Foundation
 import Synchronization
 
 public extension Sequence where Element: Sendable {
     @inlinable
-    func parallelMap<T>(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                        blockSize: Int = 1,
-                        _ transform: @Sendable @escaping (Element) -> T) -> [T] {
+    func parallelMap<T>(
+        parallelism: Int? = nil,
+        blockSize: Int = 1,
+        _ transform: @Sendable @escaping (Element) -> T
+    ) -> [T] {
+        let parallelism = parallelism ?? 128    
         precondition(parallelism >= 1, "Parallelism must be atleast 1")
         precondition(blockSize >= 1, "Block size must be atleast 1")
         if parallelism == 1 { return map(transform) }
@@ -63,9 +65,12 @@ public extension Sequence where Element: Sendable {
     }
     
     @inlinable
-    func parallelForEach(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                         blockSize: Int = 1,
-                         _ body: @Sendable @escaping (Element) -> Void) {
+    func parallelForEach(
+        parallelism: Int? = nil,
+        blockSize: Int = 1,
+        _ body: @Sendable @escaping (Element) -> Void
+    ) {
+        let parallelism = parallelism ?? 128
         precondition(parallelism >= 1, "Parallelism must be atleast one.")
         precondition(blockSize >= 1, "Block size must be atleast one.")
         if parallelism == 1 {

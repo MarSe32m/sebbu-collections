@@ -6,15 +6,17 @@
 //
 
 import Dispatch
-import Foundation
 import Synchronization
 
 // Slices etc.
 public extension Collection where Self: Sendable, Element: Sendable, Index: Sendable {
     @inlinable
-    func parallelMap<T>(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                        blockSize: Int = 1,
-                        _ transform: @Sendable (Element) -> T) -> [T] {
+    func parallelMap<T>(
+        parallelism: Int? = nil,
+        blockSize: Int = 1,
+        _ transform: @Sendable (Element) -> T
+    ) -> [T] {
+        let parallelism = parallelism ?? 256
         precondition(parallelism >= 1, "Parallelism must be atleast 1")
         precondition(blockSize >= 1, "Block size must be atleast 1")
         if isEmpty { return [] }
@@ -47,10 +49,13 @@ public extension Collection where Self: Sendable, Element: Sendable, Index: Send
     }
     
     @inlinable
-    func parallelForEach(parallelism: Int = ProcessInfo.processInfo.activeProcessorCount,
-                         blockSize: Int = 1,
-                         _ body: @Sendable (Element) -> Void) {
-        precondition(parallelism >= 1, "Parallelism must be atleast 1")
+    func parallelForEach(
+        parallelism: Int?,
+        blockSize: Int = 1,
+        _ body: @Sendable (Element) -> Void
+    ) {
+        let parallelism = parallelism ?? 256
+        precondition(parallelism  >= 1, "Parallelism must be atleast 1")
         precondition(blockSize >= 1, "Block size must be atleast 1")
         if isEmpty { return }
         if parallelism == 1 {
