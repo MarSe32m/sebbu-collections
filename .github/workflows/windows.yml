@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -13,8 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-         - tag: 6.1-RELEASE
-           branch: swift-6.1-release
+         - tag: 6.4.0-RELEASE
+           branch: swift-6.4.0-release
            
     steps:
     - uses: compnerd/gha-setup-swift@main
